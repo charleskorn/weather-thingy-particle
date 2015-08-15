@@ -1,9 +1,8 @@
 #define TEMP_SENSOR_PIN D6
 
 void setup() {
-  Serial.println("Hello world!");
-
-  Spark.publish("I'm alive", "It's true");
+  Serial.println("Starting up");
+  Spark.publish("Starting up");
 }
 
 void loop() {
@@ -81,6 +80,9 @@ void readSensorData() {
   Serial.println(temperature);
 
   verifyChecksum(humidityRaw, temperatureRaw, checksum);
+
+  Spark.publish("Humidity", String(humidity));
+  Spark.publish("Temperature", String(temperature));
 }
 
 bool waitFor(int pin, int value, unsigned int timeout) {
@@ -149,7 +151,9 @@ void verifyChecksum(uint16_t humidityRaw, uint16_t temperatureRaw, uint8_t recei
 
   if (calculatedChecksum == receivedChecksum) {
     Serial.println("Checksum OK");
+    Spark.publish("Checksum", "OK");
   } else {
     Serial.println("Checksum not OK!");
+    Spark.publish("Checksum", "Not OK");
   }
 }
