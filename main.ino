@@ -26,12 +26,12 @@ void readSensorData() {
 
   pinMode(TEMP_SENSOR_PIN, INPUT);
 
-  if (!waitFor(TEMP_SENSOR_PIN, LOW, 80)) {
+  if (!waitForPin(TEMP_SENSOR_PIN, LOW, 80)) {
     Serial.println("Sensor didn't pull line low!");
     return;
   }
 
-  if (!waitFor(TEMP_SENSOR_PIN, HIGH, 80)) {
+  if (!waitForPin(TEMP_SENSOR_PIN, HIGH, 80)) {
     Serial.println("Sensor didn't pull line high!");
     return;
   }
@@ -85,7 +85,7 @@ void readSensorData() {
   Spark.publish("Temperature", String(temperature));
 }
 
-bool waitFor(int pin, int value, unsigned int timeout) {
+bool waitForPin(int pin, int value, unsigned int timeout) {
   unsigned long startTime = micros();
 
   while ((micros() - startTime) < timeout) {
