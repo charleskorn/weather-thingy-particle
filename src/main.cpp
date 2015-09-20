@@ -1,4 +1,14 @@
+#include "application.h"
+
 #define TEMP_SENSOR_PIN D6
+
+void readSensorData();
+bool waitForPin(int pin, int value, unsigned int timeout);
+uint16_t read16(unsigned char *bits, int start);
+uint8_t read8(unsigned char *bits, int start);
+float convertToTemperature(uint16_t value);
+float convertToHumdity(uint16_t value);
+void verifyChecksum(uint16_t humidityRaw, uint16_t temperatureRaw, uint8_t receivedChecksum);
 
 void setup() {
   Serial.println("Starting up");

@@ -1,0 +1,7 @@
+{
+  "strict": true,
+  "quotmark": "double",
+  "mocha": false,
+  "browser": false,
+  "node": true
+}

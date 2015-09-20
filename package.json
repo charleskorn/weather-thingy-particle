@@ -1,0 +1,29 @@
+{
+  "name": "weather-thingy-particle",
+  "version": "0.1.0",
+  "description": "Little weather sensor node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charleskorn/weather-thingy-particle.git"
+  },
+  "author": "Charles Korn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charleskorn/weather-thingy-particle/issues"
+  },
+  "homepage": "https://github.com/charleskorn/weather-thingy-particle#readme",
+  "dependencies": {
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-print": "^1.2.0",
+    "gulp-shell": "^0.4.3",
+    "jshint-stylish": "^2.0.1",
+    "lodash": "^3.10.1",
+    "require-dir": "^0.3.0",
+    "vinyl-paths": "^2.0.0"
+  }
+}
