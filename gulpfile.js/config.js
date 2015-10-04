@@ -8,7 +8,7 @@ module.exports = {
     targetName: "weather-thingy-particle", // See https://github.com/spark/firmware/blob/develop/docs/build.md#compiling-an-application-outside-the-firmware-source
     firmwareDirectory: path.resolve("./build_tools/particle/firmware"),
     firmwareRepository: "git@github.com:spark/firmware.git",
-    firmwareVersion: "v0.4.5",
+    firmwareVersion: "v0.4.6.1",
     applicationDirectory: path.resolve("./src")
   },
   build: {
