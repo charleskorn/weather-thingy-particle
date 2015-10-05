@@ -1,5 +1,2 @@
-#include <stdio.h>
-
-int main() {
-  fprintf(stdout, "Hello world!\n");
-}
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
