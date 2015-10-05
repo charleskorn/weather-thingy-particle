@@ -1,1 +1,5 @@
+add_custom_target(libs)
+
 add_subdirectory(catch)
+set(LIBS_INCLUDE_DIRS ${CATCH_INCLUDE_DIR} CACHE INTERNAL "Paths to include folders for libraries")
+add_dependencies(libs catch)

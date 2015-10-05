@@ -1,7 +1,7 @@
 # From https://github.com/philsquared/Catch/blob/master/docs/build-systems.md#cmake
 
 cmake_minimum_required(VERSION 2.8.8)
-project(catch_builder CXX)
+project(catch CXX)
 include(ExternalProject)
 find_package(Git REQUIRED)
 
