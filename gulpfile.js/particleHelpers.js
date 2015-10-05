@@ -6,7 +6,7 @@ var _ = require("lodash");
 function commonMakeVariables() {
   var variables = {
     "PLATFORM": config.particle.platform,
-    "APPDIR": config.particle.applicationDirectory,
+    "APPDIR": config.build.sources.application,
     "TARGET_DIR": config.build.output.firmware,
     "TARGET_FILE": config.particle.targetName
   };
