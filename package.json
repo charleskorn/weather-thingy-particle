@@ -18,9 +18,11 @@
   "dependencies": {
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-batch": "^1.0.5",
     "gulp-jshint": "^1.11.2",
     "gulp-print": "^1.2.0",
     "gulp-shell": "^0.4.3",
+    "gulp-watch": "^4.3.5",
     "jshint-stylish": "^2.0.1",
     "lodash": "^3.10.1",
     "require-dir": "^0.3.0",
