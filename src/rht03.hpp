@@ -13,12 +13,12 @@ public:
 
   RHT03SensorData readSensorData() const;
   float convertToTemperature(uint16_t value) const;
+  float convertToHumdity(uint16_t value) const;
 
 private:
   int sensorPin;
 
   bool waitForPinValue(PinState value, unsigned int timeout) const;
-  float convertToHumdity(uint16_t value) const;
   bool verifyChecksum(uint16_t humidityRaw, uint16_t temperatureRaw, uint8_t receivedChecksum) const;
 
   uint16_t read16(unsigned char *bits, int start) const;
