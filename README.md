@@ -6,7 +6,8 @@
   * the dependencies listed at [https://github.com/spark/firmware/blob/develop/docs/dependencies.md]()
   * `node` and `npm`
 * Testing requires:
-  * `cmake`
+  * `cmake` (`brew install cmake` to install)
+* `cppcheck` is required for C++ linting (`brew install cppcheck` to install)
 
 ## Setup
 These commands only need to be run once upon initial clone of the repository or after changes to dependencies.

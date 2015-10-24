@@ -25,5 +25,10 @@ module.exports = {
       baseDirectory: tempDirectory,
       testBuildFiles: tempDirectory + "/tests/build"
     }
+  },
+  lint: {
+    cpp: {
+      cppcheckOptions: "--enable=all --inline-suppr" // --check-config is quite handy for making sure that everything is configured correctly but is very noisy
+    }
   }
 };

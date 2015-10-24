@@ -1,5 +1,15 @@
 add_custom_target(libs)
 
 add_subdirectory(catch)
-set(LIBS_INCLUDE_DIRS ${CATCH_INCLUDE_DIR} CACHE INTERNAL "Paths to include folders for libraries")
+add_subdirectory(fakeParticle)
+
+set(LIBS_INCLUDE_DIRS
+    ${CATCH_INCLUDE_DIR}
+    ${FAKE_PARTICLE_INCLUDE_DIR}
+    CACHE INTERNAL "Paths to include folders for libraries")
+
+set(LIBS_SOURCES
+    ${FAKE_PARTICLE_SOURCES}
+    CACHE INTERNAL "Paths to sources for libraries")
+
 add_dependencies(libs catch)
