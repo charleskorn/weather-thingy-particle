@@ -50,5 +50,27 @@ SCENARIO("RHT03Sensor class") {
         }
       }
     }
+
+    WHEN("validating checksums") {
+      AND_WHEN("the received checksum matches the calculated value") {
+        uint16_t humidity = 0b0000001010001100;
+        uint16_t temperature = 0b0000000101011111;
+        uint8_t receivedChecksum = 0b11101110;
+
+        THEN("the data passes the checksum check") {
+          REQUIRE(sensor.verifyChecksum(humidity, temperature, receivedChecksum) == true);
+        }
+      }
+
+      AND_WHEN("the received checksum does not match the calculated value") {
+        uint16_t humidity = 0b0000001010001100;
+        uint16_t temperature = 0b0000000101011111;
+        uint8_t receivedChecksum = 0b11101111;
+
+        THEN("the data fails the checksum check") {
+          REQUIRE(sensor.verifyChecksum(humidity, temperature, receivedChecksum) == false);
+        }
+      }
+    }
   }
 }
