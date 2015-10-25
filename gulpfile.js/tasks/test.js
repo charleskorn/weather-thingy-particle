@@ -14,13 +14,18 @@ gulp.task("test", ["build:tests"],
   shell.task(testBinary + " --force-colour")
 );
 
-gulp.task("test:watch", ["test"], function () {
+gulp.task("test:watch", function () {
   var pathsToWatch = [
     config.build.sources.application + "/**/*",
     config.build.sources.tests + "/**/*"
   ];
 
-  watch(pathsToWatch, batch(function (events, done) {
+  watch(
+    pathsToWatch,
+    {
+      ignoreInitial: false
+    },
+    batch(function (events, done) {
       gulp.start("test", done);
   }));
 });
