@@ -1,5 +1,9 @@
 #include "spark_wiring_ticks.h"
 
+#include "fakeParticle.hpp"
+
+using namespace FakeParticle;
+
 // Signature from spark_wiring_ticks.h
 
 void delay(unsigned long ms) {
@@ -9,21 +13,21 @@ void delay(unsigned long ms) {
 // Signatures from delay_hal.h
 
 void HAL_Delay_Milliseconds(uint32_t millis) {
-  // TODO
+  fakeParticle.advanceClock(millis * 1000);
 }
 
 void HAL_Delay_Microseconds(uint32_t micros) {
-  // TODO
+  fakeParticle.advanceClock(micros);
 }
 
 // Signarures from timer_hal.h
 
 system_tick_t HAL_Timer_Get_Micro_Seconds() {
-  // TODO
-  return 0;
+  fakeParticle.advanceClock(1);
+  return fakeParticle.getCurrentTimeInMicroseconds();
 }
 
 system_tick_t HAL_Timer_Get_Milli_Seconds() {
-  // TODO
-  return 0;
+  fakeParticle.advanceClock(1);
+  return fakeParticle.getCurrentTimeInMicroseconds() / 1000;
 }

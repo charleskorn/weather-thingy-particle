@@ -4,7 +4,8 @@
 
 typedef enum
 {
-	PUBLIC = 0, PRIVATE = 1
+  PUBLIC = 0,
+  PRIVATE = 1
 } Spark_Event_TypeDef;
 
 // From wiring/inc/spark_wiring_cloud.h

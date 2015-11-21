@@ -5,6 +5,7 @@ struct RHT03SensorData {
   float temperature;
   float humidity;
   bool checksumOK;
+  bool timedOut;
 };
 
 class RHT03Sensor {

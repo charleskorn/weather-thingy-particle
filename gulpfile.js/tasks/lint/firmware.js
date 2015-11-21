@@ -65,7 +65,7 @@ var args = [
   "--suppress=*:" + config.particle.firmwareDirectory + "/*"
 ].concat(particleIncludeArguments).concat(particlePreprocessorSymbolArguments);
 
-gulp.task("lint:firmware", 
+gulp.task("lint:firmware",
   shell.task(["cppcheck " + args.join(" ")], {
     templateData: {
       config: config

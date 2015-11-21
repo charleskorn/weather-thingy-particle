@@ -8,6 +8,7 @@ RHT03Sensor::RHT03Sensor(int sensorPin) :
 RHT03SensorData RHT03Sensor::readSensorData() const {
   RHT03SensorData data;
   data.checksumOK = false;
+  data.timedOut = true;
 
   pinMode(sensorPin, OUTPUT);
 
@@ -16,6 +17,7 @@ RHT03SensorData RHT03Sensor::readSensorData() const {
 
   digitalWrite(sensorPin, HIGH);
   delayMicroseconds(30); // Pull high for 20-40 us
+  digitalWrite(sensorPin, LOW);
 
   pinMode(sensorPin, INPUT);
 
@@ -29,20 +31,39 @@ RHT03SensorData RHT03Sensor::readSensorData() const {
     return data;
   }
 
+  if (!waitForPinValue(LOW, 80)) {
+    // Serial.println("Sensor didn't pull line low to start first pulse!");
+    return data;
+  }
+
   unsigned long pulseWidths[40];
   unsigned char bits[40];
 
   for (int i = 39; i >= 0; i--) {
+    system_tick_t timeoutAt = micros() + 50 + 70 + 10; // 50 us for low pulse, 70 us for longest high pulse, plus 10 us buffer
+
     // Wait for line to go low
-    while (digitalRead(sensorPin) != LOW) {}
+    while (digitalRead(sensorPin) != LOW) {
+      if (micros() > timeoutAt) {
+        return data;
+      }
+    }
 
     // Wait for line to go high
-    while (digitalRead(sensorPin) != HIGH) {}
+    while (digitalRead(sensorPin) != HIGH) {
+      if (micros() > timeoutAt) {
+        return data;
+      }
+    }
 
     unsigned long startTime = micros();
 
     // Wait for line to go low
-    while (digitalRead(sensorPin) != LOW) {}
+    while (digitalRead(sensorPin) != LOW) {
+      if (micros() > timeoutAt) {
+        return data;
+      }
+    }
 
     pulseWidths[i] = micros() - startTime;
   }
@@ -62,6 +83,7 @@ RHT03SensorData RHT03Sensor::readSensorData() const {
   data.humidity = convertToHumdity(humidityRaw);
   data.temperature = convertToTemperature(temperatureRaw);
   data.checksumOK = verifyChecksum(humidityRaw, temperatureRaw, checksum);
+  data.timedOut = false;
 
   return data;
 }

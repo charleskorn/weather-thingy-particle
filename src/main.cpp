@@ -21,6 +21,8 @@ void readSensorData() {
   RHT03Sensor sensor(TEMP_SENSOR_PIN);
   RHT03SensorData result = sensor.readSensorData();
 
+  Particle.publish("Timed out?", String(result.timedOut));
+  Particle.publish("Checksum OK?", String(result.checksumOK));
   Particle.publish("Humidity", String(result.humidity));
   Particle.publish("Temperature", String(result.temperature));
 }

@@ -1,28 +1,28 @@
 #include "gpio.hpp"
+#include "fakeParticle.hpp"
+
+using namespace FakeParticle;
 
 void pinMode(uint16_t pin, PinMode mode) {
-  // TODO
+  fakeParticle.setPinMode(pin, mode);
 }
 
 PinMode getPinMode(uint16_t pin) {
-  // TODO
-  return INPUT;
+  return fakeParticle.getPinMode(pin);
 }
 
 bool pinAvailable(uint16_t pin) {
-  // TODO
-  return false;
+  throw NotImplementedException();
 }
 
-void digitalWrite(uint16_t pin, uint8_t value) {
-  // TODO
+void digitalWrite(uint16_t pin, PinState value) {
+  fakeParticle.setPinState(pin, value);
 }
 
 int32_t digitalRead(uint16_t pin) {
-  // TODO
-  return 0;
+  return fakeParticle.getPinState(pin);
 }
 
-void analogWrite(uint16_t pin, uint16_t value) {
-  // TODO
+void analogWrite(uint16_t pin, PinState value) {
+  throw NotImplementedException();
 }
