@@ -40,32 +40,12 @@ RHT03SensorData RHT03Sensor::readSensorData() const {
   unsigned char bits[40];
 
   for (int i = 39; i >= 0; i--) {
-    system_tick_t timeoutAt = micros() + 50 + 70 + 10; // 50 us for low pulse, 70 us for longest high pulse, plus 10 us buffer
+    pulseWidths[i] = pulseIn(sensorPin, HIGH);
 
-    // Wait for line to go low
-    while (digitalRead(sensorPin) != LOW) {
-      if (micros() > timeoutAt) {
-        return data;
-      }
+    if (pulseWidths[i] == 0) {
+      // Timed out.
+      return data;
     }
-
-    // Wait for line to go high
-    while (digitalRead(sensorPin) != HIGH) {
-      if (micros() > timeoutAt) {
-        return data;
-      }
-    }
-
-    unsigned long startTime = micros();
-
-    // Wait for line to go low
-    while (digitalRead(sensorPin) != LOW) {
-      if (micros() > timeoutAt) {
-        return data;
-      }
-    }
-
-    pulseWidths[i] = micros() - startTime;
   }
 
   for (int i = 39; i >= 0; i--) {

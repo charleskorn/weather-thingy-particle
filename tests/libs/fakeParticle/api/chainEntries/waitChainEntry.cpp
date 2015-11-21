@@ -17,7 +17,7 @@ namespace FakeParticle {
       haveStartedWaiting = true;
     }
 
-    if (startedWaitingAt + timeToWaitInMicroseconds >= device.getCurrentTimeInMicroseconds()) {
+    if (device.getCurrentTimeInMicroseconds() >= startedWaitingAt + timeToWaitInMicroseconds) {
       return ChainEntryState::MoveToNext;
     } else {
       return ChainEntryState::Wait;
