@@ -12,7 +12,7 @@ get_filename_component(main_sources_dir ../src ABSOLUTE)
 # See http://stackoverflow.com/a/2110796/1668119 for more details.
 file(GLOB test_sources *.cpp)
 file(GLOB main_sources ${main_sources_dir}/*.cpp)
-add_executable(test_runner ${test_sources} ${main_sources} ${LIBS_SOURCES})
+add_executable(test_runner ${test_sources} ${main_sources})
 
 set_property(TARGET test_runner PROPERTY CXX_STANDARD 11)
 set_property(TARGET test_runner PROPERTY CXX_STANDARD_REQUIRED ON)
@@ -20,6 +20,8 @@ set_property(TARGET test_runner PROPERTY CXX_STANDARD_REQUIRED ON)
 include_directories(${main_sources_dir})
 include_directories(${LIBS_INCLUDE_DIRS})
 add_dependencies(test_runner libs)
+
+target_link_libraries(test_runner LINK_PUBLIC fakeParticle)
 
 install(TARGETS test_runner DESTINATION bin)
 
