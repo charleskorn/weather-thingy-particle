@@ -6,7 +6,7 @@ include(ExternalProject)
 find_package(Git REQUIRED)
 
 ExternalProject_Add(
-    catch
+    catch_sources
     PREFIX ${CMAKE_BINARY_DIR}/catch
     GIT_REPOSITORY https://github.com/philsquared/Catch.git
     TIMEOUT 10
@@ -17,6 +17,8 @@ ExternalProject_Add(
     LOG_DOWNLOAD ON
    )
 
-# Expose required variable (CATCH_INCLUDE_DIR) to parent scope
-ExternalProject_Get_Property(catch source_dir)
-set(CATCH_INCLUDE_DIR ${source_dir}/include CACHE INTERNAL "Path to include folder for Catch")
+ExternalProject_Get_Property(catch_sources source_dir)
+
+add_library(catch INTERFACE)
+add_dependencies(catch catch_sources)
+target_include_directories(catch INTERFACE ${source_dir}/include)
