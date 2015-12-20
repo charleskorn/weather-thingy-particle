@@ -13,6 +13,12 @@ SCENARIO("TEMT6000Sensor class") {
   GIVEN("a TEMT6000 ambient light sensor") {
     TEMT6000Sensor sensor(DUMMY_SENSOR_PIN);
 
+    WHEN("the driver is initialised") {
+      THEN("it sets the pin mode to INPUT") {
+        REQUIRE(fakeParticle.getPinMode(DUMMY_SENSOR_PIN) == INPUT);
+      }
+    }
+
     WHEN("the current is 0") {
       THEN("the calculated illuminance should be 0") {
         REQUIRE(sensor.convertCurrentToIlluminance(0) == 0);

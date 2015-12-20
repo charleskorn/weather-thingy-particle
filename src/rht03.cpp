@@ -2,6 +2,7 @@
 
 RHT03Sensor::RHT03Sensor(int sensorPin) :
   sensorPin(sensorPin) {
+  pinMode(sensorPin, INPUT);
 }
 
 RHT03SensorData RHT03Sensor::readSensorData() const {

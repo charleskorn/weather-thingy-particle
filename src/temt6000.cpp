@@ -2,6 +2,7 @@
 
 TEMT6000Sensor::TEMT6000Sensor(int sensorPin) :
   sensorPin(sensorPin) {
+  pinMode(sensorPin, INPUT);
 }
 
 float TEMT6000Sensor::readIlluminance() const {

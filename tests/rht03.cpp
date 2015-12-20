@@ -18,6 +18,12 @@ SCENARIO("RHT03Sensor class") {
   GIVEN("a RHT03 temperature and humidity sensor") {
     RHT03Sensor sensor(DUMMY_SENSOR_PIN);
 
+    WHEN("the driver is initialised") {
+      THEN("it sets the pin mode to INPUT") {
+        REQUIRE(fakeParticle.getPinMode(DUMMY_SENSOR_PIN) == INPUT);
+      }
+    }
+
     WHEN("converting binary temperatures to floating-point numbers") {
       AND_WHEN("the temperature is zero") {
         uint16_t binary = 0;
