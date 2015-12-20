@@ -22,8 +22,11 @@ namespace FakeParticle {
     void setPinMode(uint16_t pin, PinMode mode);
     PinMode getPinMode(uint16_t pin);
 
-    void setPinState(uint16_t pin, PinState state);
-    PinState getPinState(uint16_t pin);
+    void setPinDigitalState(uint16_t pin, PinState state);
+    PinState getPinDigitalState(uint16_t pin);
+
+    void setPinAnalogValue(uint16_t pin, int32_t value);
+    int32_t getPinAnalogValue(uint16_t pin);
 
     void advanceClock(uint32_t microseconds);
     uint32_t getCurrentTimeInMicroseconds();
@@ -37,7 +40,8 @@ namespace FakeParticle {
     std::vector<std::unique_ptr<EventChain>> eventChains;
     uint32_t currentTime;
     std::unordered_map<uint16_t, PinMode> pinModes;
-    std::unordered_map<uint16_t, PinState> pinStates;
+    std::unordered_map<uint16_t, PinState> pinDigitalStates;
+    std::unordered_map<uint16_t, int32_t> pinAnalogValues;
     bool alreadyProcessingStateChange;
     bool needToReprocessStateChange;
 

@@ -2,9 +2,9 @@
 #include "fakeParticleDevice.hpp"
 
 namespace FakeParticle {
-  Action setPin(uint16_t pin, PinState value) {
-    return [pin, value] (FakeParticleDevice& particle) -> void {
-      particle.setPinState(pin, value);
+  Action setPin(uint16_t pin, PinState state) {
+    return [pin, state] (FakeParticleDevice& particle) -> void {
+      particle.setPinDigitalState(pin, state);
     };
   }
 }

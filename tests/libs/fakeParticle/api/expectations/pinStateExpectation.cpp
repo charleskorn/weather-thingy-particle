@@ -24,7 +24,7 @@ namespace FakeParticle {
   }
 
   ConditionState PinStateExpectation::onTick(FakeParticleDevice& device) {
-    PinState currentPinState = device.getPinState(pin);
+    PinState currentPinState = device.getPinDigitalState(pin);
     uint32_t currentTime = device.getCurrentTimeInMicroseconds();
 
     if (!haveStartedWaiting) {

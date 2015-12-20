@@ -18,15 +18,19 @@ bool pinAvailable(uint16_t pin) {
 }
 
 void digitalWrite(uint16_t pin, PinState value) {
-  fakeParticle.setPinState(pin, value);
+  fakeParticle.setPinDigitalState(pin, value);
 }
 
 int32_t digitalRead(uint16_t pin) {
-  return fakeParticle.getPinState(pin);
+  return fakeParticle.getPinDigitalState(pin);
 }
 
 void analogWrite(uint16_t pin, PinState value) {
   throw NotImplementedException();
+}
+
+int32_t analogRead(uint16_t pin) {
+  return fakeParticle.getPinAnalogValue(pin);
 }
 
 bool waitForPin(pin_t pin, uint16_t value, unsigned long timeoutAt) {

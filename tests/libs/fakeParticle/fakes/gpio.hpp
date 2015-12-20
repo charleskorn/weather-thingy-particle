@@ -11,4 +11,5 @@ bool pinAvailable(uint16_t pin);
 void digitalWrite(uint16_t pin, PinState value);
 int32_t digitalRead(uint16_t pin);
 void analogWrite(uint16_t pin, uint16_t value);
+int32_t analogRead(uint16_t pin);
 uint32_t pulseIn(pin_t pin, uint16_t value);

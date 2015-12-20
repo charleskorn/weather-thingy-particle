@@ -16,7 +16,8 @@ namespace FakeParticle {
     currentTime = 0;
     eventChains.clear();
     pinModes.clear();
-    pinStates.clear();
+    pinDigitalStates.clear();
+    pinAnalogValues.clear();
     alreadyProcessingStateChange = false;
     needToReprocessStateChange = false;
   }
@@ -41,18 +42,39 @@ namespace FakeParticle {
     return pinModes.at(pin);
   }
 
-  void FakeParticleDevice::setPinState(uint16_t pin, PinState state) {
-    pinStates[pin] = state;
+  void FakeParticleDevice::setPinDigitalState(uint16_t pin, PinState state) {
+    pinAnalogValues.erase(pin);
+    pinDigitalStates[pin] = state;
 
     onStateChange();
   }
 
-  PinState FakeParticleDevice::getPinState(uint16_t pin) {
-    if (pinStates.find(pin) == pinStates.end()) {
-      throw UnknownDeviceStateException("State for pin " + to_string(pin) + " has not been set.");
+  PinState FakeParticleDevice::getPinDigitalState(uint16_t pin) {
+    if (pinDigitalStates.find(pin) == pinDigitalStates.end()) {
+      throw UnknownDeviceStateException("Digital state for pin " + to_string(pin) + " has not been set.");
     }
 
-    return pinStates.at(pin);
+    return pinDigitalStates.at(pin);
+  }
+
+  void FakeParticleDevice::setPinAnalogValue(uint16_t pin, int32_t value) {
+    if (value < 0 || value > 4095) {
+      throw out_of_range("Analog value " + to_string(value) + " for pin " +
+                          to_string(pin) + " is higher than the maximum allowed.");
+    }
+
+    pinDigitalStates.erase(pin);
+    pinAnalogValues[pin] = value;
+
+    onStateChange();
+  }
+
+  int32_t FakeParticleDevice::getPinAnalogValue(uint16_t pin) {
+    if (pinAnalogValues.find(pin) == pinAnalogValues.end()) {
+      throw UnknownDeviceStateException("Analog value for pin " + to_string(pin) + " has not been set.");
+    }
+
+    return pinAnalogValues.at(pin);
   }
 
   void FakeParticleDevice::advanceClock(uint32_t microseconds) {
