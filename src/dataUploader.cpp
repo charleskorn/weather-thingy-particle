@@ -5,20 +5,7 @@ DataUploader::DataUploader(PersistentStorage persistentStorage) :
 }
 
 void DataUploader::uploadData(time_t time, const std::map<String, float>& values) const {
-  String formattedTime = Time.format(time, TIME_FORMAT_ISO8601_FULL);
-  String requestBody = "{\"time\":\"" + formattedTime + "\", \"data\":[";
-  int valuesSeenSoFar = 0;
-
-  for (auto iterator = values.begin(); iterator != values.end(); iterator++) {
-    requestBody += "{\"variable\":\"" + iterator->first + "\", \"value\":" + String(iterator->second) + "}";
-    valuesSeenSoFar++;
-
-    if (valuesSeenSoFar < values.size()) {
-      requestBody += ",";
-    }
-  }
-
-  requestBody += "]}";
+  String requestBody = constructRequestBody(time, values);
 
   byte server[] = {10, 0, 0, 14};
 
@@ -65,4 +52,23 @@ void DataUploader::uploadData(time_t time, const std::map<String, float>& values
   {
     Serial.println("Connection failed!");
   }
+}
+
+String DataUploader::constructRequestBody(time_t time, const std::map<String, float>& values) const {
+  String formattedTime = Time.format(time, TIME_FORMAT_ISO8601_FULL);
+  String requestBody = "{\"time\":\"" + formattedTime + "\", \"data\":[";
+  size_t valuesSeenSoFar = 0;
+
+  for (auto iterator = values.begin(); iterator != values.end(); iterator++) {
+    requestBody += "{\"variable\":\"" + iterator->first + "\", \"value\":" + String(iterator->second) + "}";
+    valuesSeenSoFar++;
+
+    if (valuesSeenSoFar < values.size()) {
+      requestBody += ",";
+    }
+  }
+
+  requestBody += "]}";
+
+  return requestBody;
 }

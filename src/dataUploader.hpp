@@ -13,4 +13,6 @@ public:
 
 private:
   PersistentStorage persistentStorage;
+
+  String constructRequestBody(time_t time, const std::map<String, float>& values) const;
 };
