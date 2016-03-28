@@ -13,7 +13,7 @@ void readLightSensorData();
 
 // cppcheck-suppress unusedFunction Used by Particle framework.
 void setup() {
-  Particle.publish("wt/node/status", "alive");
+  Particle.publish("wt/node/status", "alive", PRIVATE);
 
   // Sleep for a second so we don't lose events (see note in readTemperatureSensorData below).
   delay(1000);
@@ -34,13 +34,13 @@ void readTemperatureSensorData() {
   // (or burst beyond four events in one second with three seconds to recover)
   // See https://docs.particle.io/reference/firmware/photon/#particle-publish-
   if (result.timedOut) {
-    Particle.publish("wt/sensors/temperature/status", "Timed out");
+    Particle.publish("wt/sensors/temperature/status", "Timed out", PRIVATE);
   } else if (!result.checksumOK) {
-    Particle.publish("wt/sensors/temperature/status", "Checksum failed");
+    Particle.publish("wt/sensors/temperature/status", "Checksum failed", PRIVATE);
   } else {
-    Particle.publish("wt/sensors/temperature/status", "OK");
-    Particle.publish("wt/sensors/temperature/humidity", String(result.humidity));
-    Particle.publish("wt/sensors/temperature/temperature", String(result.temperature));
+    Particle.publish("wt/sensors/temperature/status", "OK", PRIVATE);
+    Particle.publish("wt/sensors/temperature/humidity", String(result.humidity), PRIVATE);
+    Particle.publish("wt/sensors/temperature/temperature", String(result.temperature), PRIVATE);
   }
 }
 
