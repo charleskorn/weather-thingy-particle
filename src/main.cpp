@@ -12,10 +12,10 @@ TEMT6000Sensor lightSensor(LIGHT_SENSOR_PIN);
 PersistentStorage persistentStorage;
 DataUploader dataUploader(persistentStorage);
 
-void readTemperatureSensorData();
-void readLightSensorData();
 int setAgentId(String agentId);
 int setToken(String token);
+void readTemperatureSensorData(std::map<String, float>& values);
+void readLightSensorData(std::map<String, float>& values);
 
 // cppcheck-suppress unusedFunction Used by Particle framework.
 void setup() {
@@ -50,13 +50,18 @@ int setToken(String token) {
 
 // cppcheck-suppress unusedFunction Used by Particle framework.
 void loop() {
-  readTemperatureSensorData();
-  readLightSensorData();
+  time_t time = Time.now();
+  std::map<String, float> values;
+
+  readTemperatureSensorData(values);
+  readLightSensorData(values);
+
+  dataUploader.uploadData(time, values);
 
   delay(10000);
 }
 
-void readTemperatureSensorData() {
+void readTemperatureSensorData(std::map<String, float>& values) {
   RHT03SensorData result = temperatureSensor.readSensorData();
 
   // We're not allowed to publish more than 1 event a second
@@ -71,17 +76,15 @@ void readTemperatureSensorData() {
     Particle.publish("wt/sensors/temperature/humidity", String(result.humidity), PRIVATE);
     Particle.publish("wt/sensors/temperature/temperature", String(result.temperature), PRIVATE);
 
-    time_t time = Time.now();
-
-    dataUploader.uploadData(time, "temperature", result.temperature);
-    dataUploader.uploadData(time, "humidity", result.humidity);
+    values["temperature"] = result.temperature;
+    values["humidity"] = result.humidity;
   }
 }
 
-void readLightSensorData() {
+void readLightSensorData(std::map<String, float>& values) {
   float illuminance = lightSensor.readIlluminance();
 
   Particle.publish("wt/sensors/light/illuminance", String(illuminance));
 
-  dataUploader.uploadData(Time.now(), "illuminance", illuminance);
+  values["illuminance"] = illuminance;
 }

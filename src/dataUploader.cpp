@@ -4,9 +4,21 @@ DataUploader::DataUploader(PersistentStorage persistentStorage) :
   persistentStorage(persistentStorage) {
 }
 
-void DataUploader::uploadData(time_t time, String variableName, float value) {
+void DataUploader::uploadData(time_t time, const std::map<String, float>& values) const {
   String formattedTime = Time.format(time, TIME_FORMAT_ISO8601_FULL);
-  String requestBody = "{\"time\":\"" + formattedTime + "\", \"data\":[{\"variable\":\"" + variableName + "\", \"value\":" + String(value) + "}]}";
+  String requestBody = "{\"time\":\"" + formattedTime + "\", \"data\":[";
+  int valuesSeenSoFar = 0;
+
+  for (auto iterator = values.begin(); iterator != values.end(); iterator++) {
+    requestBody += "{\"variable\":\"" + iterator->first + "\", \"value\":" + String(iterator->second) + "}";
+    valuesSeenSoFar++;
+
+    if (valuesSeenSoFar < values.size()) {
+      requestBody += ",";
+    }
+  }
+
+  requestBody += "]}";
 
   byte server[] = {10, 0, 0, 14};
 
