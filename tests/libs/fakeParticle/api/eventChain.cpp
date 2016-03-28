@@ -1,4 +1,5 @@
 #include <sstream>
+#include <iostream>
 
 #include "condition.hpp"
 #include "eventChain.hpp"
@@ -7,6 +8,7 @@
 #include "chainEntries/actionChainEntry.hpp"
 #include "chainEntries/conditionChainEntry.hpp"
 #include "chainEntries/waitChainEntry.hpp"
+#include "fakeParticleDevice.hpp"
 
 using namespace std;
 
@@ -86,7 +88,22 @@ namespace FakeParticle {
   }
 
   void EventChain::onStateChange(FakeParticleDevice& device) {
+#ifdef FAKE_PARTICLE_DEBUG
+    cout << "Entering onStateChange" << endl;
+    cout << " hasReachedEnd: " << hasReachedEnd() << endl;
+    cout << " Chain length: " << chainEntries.size() << endl;
+
+    if (!hasReachedEnd()) {
+      cout << " Current entry: " << (*currentEntry) << endl;
+    }
+
+    cout << " Current time: " << device.getCurrentTimeInMicroseconds() << endl;
+#endif
+
     while (!hasReachedEnd() && (*currentEntry)->reevaluate(device) == ChainEntryState::MoveToNext) {
+#ifdef FAKE_PARTICLE_DEBUG
+      cout << " Advancing." << endl;
+#endif
       currentEntry++;
     }
   }
