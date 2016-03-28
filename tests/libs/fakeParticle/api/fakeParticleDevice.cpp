@@ -77,6 +77,24 @@ namespace FakeParticle {
     return pinAnalogValues.at(pin);
   }
 
+  void FakeParticleDevice::setEEPROMValue(int slot, uint8_t value) {
+    if (slot < 0 || slot > 2047) {
+      throw out_of_range("EEPROM slot " + to_string(slot) + " is not within the range allowed.");
+    }
+
+    eepromValues[slot] = value;
+
+    onStateChange();
+  }
+
+  uint8_t FakeParticleDevice::getEEPROMValue(int slot) {
+    if (eepromValues.find(slot) == eepromValues.end()) {
+      throw UnknownDeviceStateException("EEPROM value for slot " + to_string(slot) + " has not been set.");
+    }
+
+    return eepromValues.at(slot);
+  }
+
   void FakeParticleDevice::advanceClock(uint32_t microseconds) {
     // Use a for loop rather than just incrementing currentTime directly so that
     // advanceClock(1); advanceClock(1); is exactly the same as advanceClock(2);

@@ -17,7 +17,7 @@ gulp.task("build:tests:prepareCMake", function() {
   var options = [
     "-D CMAKE_INSTALL_PREFIX=" + config.build.output.tests,
     "-D PARTICLE_FIRMWARE_DIR=" + config.particle.firmwareDirectory,
-    "-DCMAKE_BUILD_TYPE=Debug",
+    "-D CMAKE_BUILD_TYPE=Debug",
     config.build.sources.tests
   ];
 

@@ -104,7 +104,7 @@ namespace FakeParticle {
 #ifdef FAKE_PARTICLE_DEBUG
       cout << " Advancing." << endl;
 #endif
-      currentEntry++;
+      ++currentEntry;
     }
   }
 }

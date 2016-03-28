@@ -1,33 +1,17 @@
-#include "spark_wiring_ticks.h"
+#include "spark_wiring_time.h"
+#include "../api/exceptions.hpp"
 
-#include "fakeParticle.hpp"
+// From spark_wiring_time.cpp
 
-using namespace FakeParticle;
+const char* TIME_FORMAT_DEFAULT = "asctime";
+const char* TIME_FORMAT_ISO8601_FULL = "%Y-%m-%dT%H:%M:%S%z";
 
-// Signature from spark_wiring_ticks.h
+TimeClass Time;
 
-void delay(unsigned long ms) {
-  HAL_Delay_Milliseconds(ms);
+String TimeClass::format(time_t t, const char* format_spec) {
+  throw FakeParticle::NotImplementedException();
 }
 
-// Signatures from delay_hal.h
-
-void HAL_Delay_Milliseconds(uint32_t millis) {
-  fakeParticle.advanceClock(millis * 1000);
-}
-
-void HAL_Delay_Microseconds(uint32_t micros) {
-  fakeParticle.advanceClock(micros);
-}
-
-// Signarures from timer_hal.h
-
-system_tick_t HAL_Timer_Get_Micro_Seconds() {
-  fakeParticle.advanceClock(1);
-  return fakeParticle.getCurrentTimeInMicroseconds();
-}
-
-system_tick_t HAL_Timer_Get_Milli_Seconds() {
-  fakeParticle.advanceClock(1);
-  return fakeParticle.getCurrentTimeInMicroseconds() / 1000;
+time_t TimeClass::now() {
+  throw FakeParticle::NotImplementedException();
 }

@@ -92,7 +92,7 @@ SCENARIO("RHT03Sensor class") {
 
     WHEN("reading data from the sensor") {
       AND_WHEN("the sensor does not respond during the handshake") {
-        EventChain& timeline = fakeParticle
+        fakeParticle
           .immediately(setPin(DUMMY_SENSOR_PIN, HIGH))
           .andThenExpect(pinIsLow(DUMMY_SENSOR_PIN, 1, 10, TimeUnit::Milliseconds))
           .andThenExpect(pinIsHigh(DUMMY_SENSOR_PIN, 20, 40, TimeUnit::Microseconds))
