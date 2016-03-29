@@ -1,13 +1,14 @@
 var path = require("path");
 
-var baseDirectory = path.resolve("./build");
-var tempDirectory = path.resolve("./build_tools");
+var outputDirectory = path.resolve("./output");
+var libsDirectory = path.resolve("./libs");
+var tempDirectory = path.resolve("./build_temp");
 
 module.exports = {
   particle: {
     platform: "photon", // See https://github.com/spark/firmware/blob/develop/docs/build.md#platform-nameids
     targetName: "weather-thingy-particle", // See https://github.com/spark/firmware/blob/develop/docs/build.md#compiling-an-application-outside-the-firmware-source
-    firmwareDirectory: path.resolve(tempDirectory + "/particle/firmware"),
+    firmwareDirectory: path.resolve(libsDirectory + "/particle/firmware"),
     firmwareRepository: "git@github.com:spark/firmware.git",
     firmwareVersion: "v0.4.7"
   },
@@ -17,9 +18,9 @@ module.exports = {
       tests: path.resolve("./tests")
     },
     output: {
-      baseDirectory: baseDirectory,
-      firmware: baseDirectory + "/firmware",
-      tests: baseDirectory + "/tests"
+      baseDirectory: outputDirectory,
+      firmware: outputDirectory + "/firmware",
+      tests: outputDirectory + "/tests"
     },
     temp: {
       baseDirectory: tempDirectory,

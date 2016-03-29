@@ -1,4 +1,5 @@
 node_modules
-/build_tools
-/build
+/build_temp
+/libs
+/output
 /gulpfile.js/localConfig.js
