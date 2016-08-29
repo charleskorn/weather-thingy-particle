@@ -3,6 +3,8 @@
 #include "condition.hpp"
 #include "exceptions.hpp"
 
+#include <algorithm>
+
 using namespace std;
 
 namespace FakeParticle {
