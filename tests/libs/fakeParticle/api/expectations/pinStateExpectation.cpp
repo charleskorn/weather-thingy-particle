@@ -19,8 +19,8 @@ namespace FakeParticle {
       desiredState(desiredState),
       minTimeInMicroseconds(toMicroseconds(minTime, timeUnit)),
       maxTimeInMicroseconds(toMicroseconds(maxTime, timeUnit)),
-      haveStartedWaiting(false),
-      startedWaitingAt(0) {
+      startedWaitingAt(0),
+      haveStartedWaiting(false) {
   }
 
   ConditionState PinStateExpectation::onTick(FakeParticleDevice& device) {
