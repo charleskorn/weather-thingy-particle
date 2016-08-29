@@ -25,4 +25,4 @@ install:
   - npm install
   - gulp setup
 
-script: gulp build:firmware && gulp test
+script: gulp build:firmware && VERBOSE=1 gulp test
