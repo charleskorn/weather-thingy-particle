@@ -1,6 +1,17 @@
 cmake_minimum_required (VERSION 2.6)
 project(weather-thingy-particle-tests)
 
+# Enable warnings, from http://jasonjuang.blogspot.com.au/2014/09/how-to-set-warning-level-in-cmake.html
+if(MSVC)
+  if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+    string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+  endif()
+elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic -Werror")
+endif()
+
 get_filename_component(main_sources_dir ../src ABSOLUTE)
 
 # Important: we're using globbing here, which has limited support in CMake.

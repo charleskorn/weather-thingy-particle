@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <vector>
+#include <memory>
 
 #include "action.hpp"
 #include "timeUnit.hpp"

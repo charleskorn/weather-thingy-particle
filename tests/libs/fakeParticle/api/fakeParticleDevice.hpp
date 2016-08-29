@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 
 #include "pinmap_hal.h"
 #include "spark_wiring_constants.h"
