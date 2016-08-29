@@ -5,8 +5,8 @@ using namespace std;
 
 namespace FakeParticle {
   WaitChainEntry::WaitChainEntry(uint32_t time, TimeUnit timeUnit) :
-    haveStartedWaiting(false),
-    startedWaitingAt(0)
+    startedWaitingAt(0),
+    haveStartedWaiting(false)
   {
     timeToWaitInMicroseconds = toMicroseconds(time, timeUnit);
   }
