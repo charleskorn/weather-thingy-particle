@@ -4,7 +4,7 @@ services:
   - docker
 
 install:
-  - ./go.sh run npm install
+  - ./go.sh setup
   - ./go.sh gulp setup
 
 script: ./go.sh gulp build:firmware && ./go.sh gulp test

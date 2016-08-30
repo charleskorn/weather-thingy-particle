@@ -37,7 +37,7 @@ function help {
 }
 
 function setup {
-  docker pull
+  docker pull $IMAGE
   runInDockerContainer npm install
 }
 
