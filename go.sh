@@ -16,6 +16,10 @@ function main {
     runGulp "${@:2}"
     ;;
 
+  run)
+    runOtherCommand "${@:2}"
+    ;;
+
   *)
     help
     exit 1
@@ -27,7 +31,8 @@ function main {
 function help {
   echo "Usage:"
   echo " setup          downloads and installs any missing dependencies (apart from Docker, which must already be configured)"
-  echo " gulp <params>  runs Gulp with the parameters given"
+  echo " gulp <params>  runs Gulp with the parameters given inside a build container"
+  echo " run <command>  runs the command given inside a build container"
   exit -1
 }
 
@@ -38,6 +43,10 @@ function setup {
 
 function runGulp {
   runInDockerContainer "./node_modules/.bin/gulp" "$@"
+}
+
+function runOtherCommand {
+  runInDockerContainer "$@"
 }
 
 function runInDockerContainer {
