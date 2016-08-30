@@ -7,7 +7,7 @@ list(APPEND sources ${PARTICLE_FIRMWARE_DIR}/wiring/src/spark_wiring_print.cpp)
 list(APPEND sources ${PARTICLE_FIRMWARE_DIR}/wiring/src/string_convert.cpp)
 add_library(fakeParticle ${sources})
 
-set_property(TARGET fakeParticle PROPERTY CXX_STANDARD 11)
+set_property(TARGET fakeParticle PROPERTY CXX_STANDARD 14)
 set_property(TARGET fakeParticle PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # Preprocessor definitions required by Particle firmware headers 

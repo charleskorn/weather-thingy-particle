@@ -31,6 +31,7 @@ namespace FakeParticle {
   }
 
   void FakeParticleDevice::setPinMode(uint16_t pin, PinMode mode) {
+    pinModes.reserve(1); // This is required to work around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61143.
     pinModes[pin] = mode;
 
     onStateChange();

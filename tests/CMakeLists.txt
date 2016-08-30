@@ -9,7 +9,7 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
   endif()
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic -Werror")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 endif()
 
 get_filename_component(main_sources_dir ../src ABSOLUTE)
@@ -23,7 +23,7 @@ file(GLOB test_sources *.cpp)
 file(GLOB main_sources ${main_sources_dir}/*.cpp)
 add_executable(test_runner ${test_sources} ${main_sources})
 
-set_property(TARGET test_runner PROPERTY CXX_STANDARD 11)
+set_property(TARGET test_runner PROPERTY CXX_STANDARD 14)
 set_property(TARGET test_runner PROPERTY CXX_STANDARD_REQUIRED ON)
 
 include_directories(${main_sources_dir})

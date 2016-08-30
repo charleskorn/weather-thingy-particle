@@ -1,5 +1,7 @@
 #include "utilities.hpp"
 
+#include <stdexcept>
+
 using namespace std;
 
 namespace FakeParticle {
