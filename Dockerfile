@@ -14,3 +14,4 @@ RUN apt-get install git -y
 RUN apt-get install vim-common -y # For xxd
 RUN apt-get install gdb -y
 RUN apt-get install nodejs -y
+RUN apt-get install cppcheck -y

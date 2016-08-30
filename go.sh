@@ -49,6 +49,7 @@ function versionInfo {
 function runInDockerContainer {
   docker run -it --rm \
     --volume $SOURCE_ROOT_DIRECTORY:/source \
+    --volume $HOME/.particle:/root/.particle \
     --workdir /source \
     weather-thingy-build:latest \
     "$@"
