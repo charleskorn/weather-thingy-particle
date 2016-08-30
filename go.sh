@@ -3,16 +3,13 @@
 set -e
 
 SOURCE_ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+IMAGE="charleskorn/particle-docker-dev-env:latest"
 
 function main {
   case "$1" in
 
   setup)
     setup
-    ;;
-
-  versionInfo)
-    versionInfo
     ;;
 
   gulp)
@@ -29,21 +26,18 @@ function main {
 
 function help {
   echo "Usage:"
-  echo " TODO"
+  echo " setup          downloads and installs any missing dependencies (apart from Docker, which must already be configured)"
+  echo " gulp <params>  runs Gulp with the parameters given"
   exit -1
 }
 
 function setup {
-  echo "TODO"
-  exit -1
+  docker pull
+  runInDockerContainer npm install
 }
 
 function runGulp {
   runInDockerContainer "./node_modules/.bin/gulp" "$@"
-}
-
-function versionInfo {
-  runInDockerContainer cmake --version
 }
 
 function runInDockerContainer {
@@ -51,7 +45,7 @@ function runInDockerContainer {
     --volume $SOURCE_ROOT_DIRECTORY:/source \
     --volume $HOME/.particle:/root/.particle \
     --workdir /source \
-    weather-thingy-build:latest \
+    $IMAGE \
     "$@"
 }
 
