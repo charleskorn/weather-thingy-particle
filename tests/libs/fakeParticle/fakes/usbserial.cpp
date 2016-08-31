@@ -1,4 +1,4 @@
-#include "spark_wiring_usbserial.h"
+#include "usbserial.hpp"
 #include "../api/exceptions.hpp"
 
 USBSerial Serial;
@@ -31,5 +31,13 @@ int USBSerial::available() {
 }
 
 void USBSerial::flush() {
+  throw FakeParticle::NotImplementedException();
+}
+
+int USBSerial::availableForWrite() {
+  throw FakeParticle::NotImplementedException();
+}
+
+void USBSerial::blockOnOverrun(bool) {
   throw FakeParticle::NotImplementedException();
 }
