@@ -1,7 +1,6 @@
 #include "application.h"
 #include "rht03.hpp"
 #include "temt6000.hpp"
-#include "persistentStorage.hpp"
 #include "dataUploader.hpp"
 
 #define TEMP_SENSOR_PIN D6
@@ -9,11 +8,8 @@
 
 RHT03Sensor temperatureSensor(TEMP_SENSOR_PIN);
 TEMT6000Sensor lightSensor(LIGHT_SENSOR_PIN);
-PersistentStorage persistentStorage;
-DataUploader dataUploader(persistentStorage);
+DataUploader dataUploader;
 
-int setAgentId(String agentId);
-int setToken(String token);
 void readTemperatureSensorData(std::map<String, float>& values);
 void readLightSensorData(std::map<String, float>& values);
 
@@ -23,29 +19,6 @@ void setup() {
 
   // Sleep for a second so we don't lose events (see note in readTemperatureSensorData below).
   delay(1000);
-
-  Particle.function("setAgentId", setAgentId);
-  Particle.function("setToken", setToken);
-}
-
-int setAgentId(String agentId) {
-  int32_t convertedId = agentId.toInt();
-
-  if (convertedId == 0) {
-    return -1;
-  }
-
-  persistentStorage.saveAgentId(convertedId);
-  return 0;
-}
-
-int setToken(String token) {
-  if (token.length() > persistentStorage.getMaxTokenLength()) {
-    return -1;
-  }
-
-  persistentStorage.saveToken(token);
-  return 0;
 }
 
 // cppcheck-suppress unusedFunction Used by Particle framework.
@@ -73,8 +46,6 @@ void readTemperatureSensorData(std::map<String, float>& values) {
     Particle.publish("wt/sensors/temperature/status", "Checksum failed", PRIVATE);
   } else {
     Particle.publish("wt/sensors/temperature/status", "OK", PRIVATE);
-    Particle.publish("wt/sensors/temperature/humidity", String(result.humidity), PRIVATE);
-    Particle.publish("wt/sensors/temperature/temperature", String(result.temperature), PRIVATE);
 
     values["temperature"] = result.temperature;
     values["humidity"] = result.humidity;
@@ -82,9 +53,5 @@ void readTemperatureSensorData(std::map<String, float>& values) {
 }
 
 void readLightSensorData(std::map<String, float>& values) {
-  float illuminance = lightSensor.readIlluminance();
-
-  Particle.publish("wt/sensors/light/illuminance", String(illuminance));
-
-  values["illuminance"] = illuminance;
+  values["illuminance"] = lightSensor.readIlluminance();
 }

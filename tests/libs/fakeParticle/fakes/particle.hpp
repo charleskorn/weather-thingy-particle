@@ -16,8 +16,8 @@ typedef int (user_function_int_str_t)(String paramString);
 
 class CloudClass {
 public:
-  bool publish(const char *eventName, Spark_Event_TypeDef eventType=PUBLIC);
-  bool publish(const char *eventName, const char *eventData, Spark_Event_TypeDef eventType=PUBLIC);
+  bool publish(String eventName, Spark_Event_TypeDef eventType=PUBLIC);
+  bool publish(String eventName, String eventData, Spark_Event_TypeDef eventType=PUBLIC);
 
   static bool function(const char *funcKey, user_function_int_str_t* func);
 };

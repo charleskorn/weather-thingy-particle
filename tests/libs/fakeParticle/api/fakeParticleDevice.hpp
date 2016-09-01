@@ -11,6 +11,7 @@
 #include "eventChain.hpp"
 #include "timeUnit.hpp"
 #include "expectations/expectations.hpp"
+#include "particleEvent.hpp"
 
 namespace FakeParticle {
   class FakeParticleDevice {
@@ -40,6 +41,9 @@ namespace FakeParticle {
     EventChain& expect(Expectation* const expectation);
     EventChain& immediately(Action action);
 
+    void publishEvent(const ParticleEvent event);
+    std::vector<ParticleEvent>& getPublishedEvents();
+
   private:
     std::vector<std::unique_ptr<EventChain>> eventChains;
     uint32_t currentTime;
@@ -47,6 +51,7 @@ namespace FakeParticle {
     std::unordered_map<uint16_t, PinState> pinDigitalStates;
     std::unordered_map<uint16_t, int32_t> pinAnalogValues;
     std::unordered_map<int, uint8_t> eepromValues;
+    std::vector<ParticleEvent> publishedEvents;
     bool alreadyProcessingStateChange;
     bool needToReprocessStateChange;
 

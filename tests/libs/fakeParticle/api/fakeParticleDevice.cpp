@@ -20,6 +20,7 @@ namespace FakeParticle {
     pinModes.clear();
     pinDigitalStates.clear();
     pinAnalogValues.clear();
+    publishedEvents.clear();
     alreadyProcessingStateChange = false;
     needToReprocessStateChange = false;
   }
@@ -157,5 +158,13 @@ namespace FakeParticle {
     } while (needToReprocessStateChange);
 
     alreadyProcessingStateChange = false;
+  }
+
+  void FakeParticleDevice::publishEvent(const ParticleEvent event) {
+    publishedEvents.push_back(event);
+  }
+
+  vector<ParticleEvent>& FakeParticleDevice::getPublishedEvents() {
+    return publishedEvents;
   }
 }

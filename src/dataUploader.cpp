@@ -1,74 +1,33 @@
 #include "dataUploader.hpp"
 
-DataUploader::DataUploader(PersistentStorage persistentStorage) :
-  persistentStorage(persistentStorage) {
-}
-
 void DataUploader::uploadData(time_t time, const std::map<String, float>& values) const {
-  String requestBody = constructRequestBody(time, values);
-
-  byte server[] = {10, 0, 0, 14};
-
-  TCPClient client;
-
-  if (client.connect(server, 8000))
-  {
-    Serial.println("Connected.");
-
-    String agentId = String(persistentStorage.getAgentId());
-    String token = persistentStorage.getToken();
-
-    client.println("POST /v1/agents/" + agentId + "/data HTTP/1.1");
-    client.println("User-Agent: weather-thingy-particle");
-    client.println("Connection: close");
-    client.println("Authorization: weather-thingy-agent-token " + token);
-    client.println("Accept: */*");
-    client.println("Content-Type: application/json");
-    client.println("Content-Length: " + String(requestBody.length()));
-    client.println();
-    client.println(requestBody);
-    client.println();
-
-    client.flush();
-
-    Serial.println("Response:");
-
-    // TODO Check response indicates success
-
-    unsigned long startTime = micros();
-
-    while (micros() - startTime < 2 * 1000 * 1000) {
-      while (client.available()) {
-        Serial.write(client.read());
-      }
-    }
-
-    Serial.println();
-    Serial.println("End of response.");
-
-    client.stop();
-  }
-  else
-  {
-    Serial.println("Connection failed!");
-  }
+  Particle.publish("wt/data", constructEventBody(time, values), PRIVATE);
 }
 
-String DataUploader::constructRequestBody(time_t time, const std::map<String, float>& values) const {
-  String formattedTime = Time.format(time, TIME_FORMAT_ISO8601_FULL);
-  String requestBody = "{\"time\":\"" + formattedTime + "\", \"data\":[";
+String DataUploader::constructEventBody(time_t time, const std::map<String, float>& values) const {
+  String formattedTime = formatDate(time);
+  String eventBody = "{\"date\":\"" + formattedTime + "\",";
   size_t valuesSeenSoFar = 0;
 
   for (auto iterator = values.begin(); iterator != values.end(); iterator++) {
-    requestBody += "{\"variable\":\"" + iterator->first + "\", \"value\":" + String(iterator->second) + "}";
+    eventBody += "\"" + iterator->first + "\":" + String(iterator->second);
     valuesSeenSoFar++;
 
     if (valuesSeenSoFar < values.size()) {
-      requestBody += ",";
+      eventBody += ",";
     }
   }
 
-  requestBody += "]}";
+  eventBody += "}";
 
-  return requestBody;
+  return eventBody;
+}
+
+// We can't use Time.format() here because it throws an exception when running on the host (eg. during testing).
+String DataUploader::formatDate(time_t time) const {
+  tm* timeDetails = localtime(&time);
+  char buffer[50];
+  strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", timeDetails);
+
+  return String(buffer);
 }
