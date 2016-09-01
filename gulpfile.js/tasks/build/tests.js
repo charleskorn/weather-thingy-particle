@@ -6,9 +6,7 @@ var shell = require("gulp-shell");
 var config = require("../../config");
 
 gulp.task("build:tests", ["build:tests:prepareCMake"],
-  shell.task([
-    "make",
-    "make install"], {
+  shell.task("make install", {
       cwd: config.build.temp.testBuildFiles
     })
 );
