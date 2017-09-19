@@ -45,8 +45,6 @@ There are two options for flashing your device:
 ## To do
 
 * Work out how to use .ino files when compiling locally
-* Lint (or equivalent) for C++ files
-* Travis build
 
 ## Notes
 
